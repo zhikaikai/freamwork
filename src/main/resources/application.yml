@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cms?useSSL=false&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    autoCommit: false
+    minIdle: 5
+    maximumPoolSize: 20
+    connectionInitSql: select 1
+    hikari:
+      idle-timeout: 10000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+  servlet:
+    context-path: /
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+  mapperLocations: classpath*:net/xuanyutech/cims/*/dao/*.xml
+
+
+logging:
+  level:
+    ROOT: debug
+    org.apache.kafka: ERROR
+    org.springframework.kafka: ERROR

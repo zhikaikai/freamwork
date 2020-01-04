@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.web.model;
 
-import com.hogae.freamwork.core.model.Model;
-public interface Dao<K,M extends Model<K>> extends InsertDao<K,M>,UpdateDao<K,M>,DeleteDao<K,M>,QueryDao<K,M>,SqlDao {
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
+public enum RespsonseCode {
+
+    SUCCESS(1001,"成功"),
+    ERROR(1002,"错误")
+
+    ;
+
+    int code;
+    String message;
 
 }

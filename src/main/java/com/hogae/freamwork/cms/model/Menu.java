@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.model;
+package com.hogae.freamwork.cms.model;
 
-import lombok.AllArgsConstructor;
+import com.hogae.freamwork.core.model.Model;
+import lombok.Data;
 
-@AllArgsConstructor
-public enum RespsonseCode {
+@Data
+public class Menu extends Model<Integer> {
 
-    SUCCESS(1001,"成功"),
-    ERROR(1002,"错误")
+    private String name;
 
-    ;
+    private String url;
 
-    int code;
-    String message;
+    private Integer level;
+
+    private String memo;
+
 
 }

@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.cms.controller;
 
-import com.hogae.freamwork.web.model.Pagination;
+import com.hogae.freamwork.cms.service.IMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+/**
+ * 菜单
+ */
+@RestController
+@RequestMapping("menu")
+public class MenuController {
 
-public interface QueryDao<K,M> {
-    M getById(K key);
-    List<M> getByIds(List<K> listKey);
-    List<M> queryAll(M model);
-    List<M> queryByPagination(Pagination<M> pagination);
-    int queryCount(M model);
-    List<M> distinctField(M model);
+    @Autowired
+    public IMenuService service;
+
+    public IMenuService getService() {
+        return service;
+    }
+
+
 }

@@ -14,17 +14,29 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.generator.freemarker.generator.model;
 
-import com.hogae.freamwork.web.model.Pagination;
+public class AttributeDetail {
 
-import java.util.List;
+    public String attributeName;
 
-public interface QueryDao<K,M> {
-    M getById(K key);
-    List<M> getByIds(List<K> listKey);
-    List<M> queryAll(M model);
-    List<M> queryByPagination(Pagination<M> pagination);
-    int queryCount(M model);
-    List<M> distinctField(M model);
+    public String attributeType;
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public String getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(String attributeType) {
+        this.attributeType = attributeType;
+    }
+
+
 }

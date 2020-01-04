@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.model;
+package com.hogae.freamwork.web.model;
 
 
 public class JsonResponse<T> {

@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.web.dao;
 
-import com.hogae.freamwork.web.model.Pagination;
+import com.hogae.freamwork.core.dao.DeleteDao;
+import com.hogae.freamwork.core.dao.InsertDao;
+import com.hogae.freamwork.core.dao.QueryDao;
+import com.hogae.freamwork.core.dao.UpdateDao;
 
-import java.util.List;
+public interface Dao<K, M> extends InsertDao<K, M>, UpdateDao<K, M>, DeleteDao<K, M>, QueryDao<K, M> {
 
-public interface QueryDao<K,M> {
-    M getById(K key);
-    List<M> getByIds(List<K> listKey);
-    List<M> queryAll(M model);
-    List<M> queryByPagination(Pagination<M> pagination);
-    int queryCount(M model);
-    List<M> distinctField(M model);
+
 }

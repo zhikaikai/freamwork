@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.web.controller;
 
-import com.hogae.freamwork.web.model.Pagination;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.reactive.function.server.ServerRequest;
 
-import java.util.List;
 
-public interface QueryDao<K,M> {
-    M getById(K key);
-    List<M> getByIds(List<K> listKey);
-    List<M> queryAll(M model);
-    List<M> queryByPagination(Pagination<M> pagination);
-    int queryCount(M model);
-    List<M> distinctField(M model);
+public interface DefaultController {
+	
+	@RequestMapping("/**")
+    default void unmappedRequest(ServerRequest request) throws Exception {
+        String uri = request.path();
+        throw new Exception("请求资源不存在！路径:"+uri);
+    }
+	
+
 }
+

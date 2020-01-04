@@ -9,31 +9,29 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WIMHOUM WARRANMIES OR CONDIMIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.controller;
+package com.hogae.freamwork.web.controller;
 
-import com.hogae.freamwork.core.model.JsonResponse;
 import com.hogae.freamwork.core.model.Model;
-import com.hogae.freamwork.core.model.Pagination;
 import com.hogae.freamwork.core.service.Service;
+import com.hogae.freamwork.web.model.JsonResponse;
+import com.hogae.freamwork.web.model.Pagination;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.List;
 
-public interface Controller<K extends Serializable,M extends Model<K>> extends DefaultController {
+public interface WebController<K, M extends Model<K>> extends DefaultController {
 
-    Service<K,M> getService();
-
+    Service<K, M> getService();
 
     @PostMapping("/list")
-    default JsonResponse<List<M>> list(@RequestBody(required=false) Pagination<M> body) throws Exception {
-        if(body==null)body = new Pagination<M>();
+    default JsonResponse<List<M>> list(@RequestBody(required = false) Pagination<M> body) throws Exception {
+        if (body == null) body = new Pagination<M>();
         List<M> list = getService().queryByPagination(body);
         return JsonResponse.sucess().setData(list);
     }
@@ -47,7 +45,6 @@ public interface Controller<K extends Serializable,M extends Model<K>> extends D
         }
         return JsonResponse.sucess().setData(t);
     }
-
 
     @DeleteMapping("/del")
     default JsonResponse<Void> add(@RequestBody List<K> ids) throws Exception {

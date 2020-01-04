@@ -16,30 +16,32 @@
 
 package com.hogae.freamwork.core.service;
 
-import com.hogae.freamwork.core.dao.Dao;
-import com.hogae.freamwork.core.model.Model;
-import com.hogae.freamwork.core.model.Pagination;
+import com.hogae.freamwork.web.dao.Dao;
+import com.hogae.freamwork.web.model.Pagination;
 
 import java.util.List;
 
-public interface Service<K,M extends Model<K>> {
+public interface Service<K, M> {
 
-    Dao<K,M> getDao();
+    Dao<K, M> getDao();
 
-    default int insert(M model){
+    default int insert(M model) {
         return getDao().insert(model);
     }
-    default int insertSelective(M model){
+
+    default int insertSelective(M model) {
         return getDao().insertSelective(model);
     }
-    default int insertBatch(List<M> listModel){
+
+    default int insertBatch(List<M> listModel) {
         return getDao().insertBatch(listModel);
     }
 
-    default int update(M model){
+    default int update(M model) {
         return getDao().update(model);
     }
-    default int updateSelective(M model){
+
+    default int updateSelective(M model) {
         return getDao().updateSelective(model);
     }
 
@@ -65,21 +67,22 @@ public interface Service<K,M extends Model<K>> {
         return getDao().queryAll(model);
     }
 
-    default List<M> queryByPagination(Pagination<M> pagination){
+    default List<M> queryByPagination(Pagination<M> pagination) {
         return getDao().queryByPagination(pagination);
     }
 
-    default int queryCount(M model){
+    default int queryCount(M model) {
         return getDao().queryCount(model);
     }
-    default List<M> distinctField(M model){
+
+    default List<M> distinctField(M model) {
         return getDao().distinctField(model);
     }
 
-    default void truncateTable(String tableName){
-        getDao().truncateTable(tableName);
-    }
-    default int select1(){
-        return getDao().select1();
-    }
+//    default void truncateTable(String tableName){
+//        getDao().truncateTable(tableName);
+//    }
+//    default int select1(){
+//        return getDao().select1();
+//    }
 }

@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.dao;
+package com.hogae.freamwork.cms.dao;
 
-import com.hogae.freamwork.web.model.Pagination;
+import com.hogae.freamwork.cms.model.Menu;
+import com.hogae.freamwork.web.dao.Dao;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
-public interface QueryDao<K,M> {
-    M getById(K key);
-    List<M> getByIds(List<K> listKey);
-    List<M> queryAll(M model);
-    List<M> queryByPagination(Pagination<M> pagination);
-    int queryCount(M model);
-    List<M> distinctField(M model);
+@Mapper
+public interface MenuDao extends Dao<Integer, Menu> {
+
+    List<String> getTables() throws Exception;
+
+    List<Map<String, Object>> getTableColumns(@Param("tableName") String tableName) throws Exception;
+
 }
