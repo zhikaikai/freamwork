@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "65c96072-873f-4b1e-b65d-a6fbec898879",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": 3,\n    \"name\": \"qwe\",\n    \"url\": \"dsafadsfdsfsas\",\n    \"level\": 0,\n    \"updateTime\":\"2020-01-06 23:38:13\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/menu/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"menu",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": 3,\n    \"name\": \"111111\",\n    \"url\": \"11111\",\n    \"level\": 0,\n    \"updateTime\":\"2020-01-06 23:38:13\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/menu/update",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"menu",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
