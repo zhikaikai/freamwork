@@ -30,15 +30,3 @@ The following guides illustrate how to use some features concretely:
 
 
 
-### Mybaits migrations
-监控数据库变化
-下载地址: https://github.com/mybatis/migrations/releases
-
-配置环境变量
-例如：
-MIGRATIONS_HOME = C:\Program Files\mybatis\mybatis-migrations-3.3.6;
-path += %MIGRATIONS_HOME%\bin;
-
-初始化仓库
-migrate init
-
