@@ -91,7 +91,7 @@
         </trim>
     </insert>
 
-    <insert id="insertBatchSelective" parameterType="java.util.List">
+    <insert id="insertBatch" parameterType="java.util.List">
         INSERT INTO
         sys_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -125,7 +125,7 @@
         </foreach>
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.hogae.cms.model.Menu">
+    <update id="update" parameterType="com.hogae.cms.model.Menu">
         update sys_menu
         set name        = #{name,jdbcType=VARCHAR},
             url         = #{url,jdbcType=VARCHAR},
@@ -136,7 +136,7 @@
         where _id = #{key,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.hogae.cms.model.Menu">
+    <update id="updateSelective" parameterType="com.hogae.cms.model.Menu">
         update sys_menu
         <set>
             <if test="name != null">
@@ -161,50 +161,7 @@
         where _id = #{key,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
-        UPDATE sys_menu SET
-        <trim suffixOverrides=",">
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="name = CASE _id ">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.name,jdbcType=VARCHAR}
-
-            </foreach>
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="url = CASE _id ">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.url,jdbcType=VARCHAR}
-
-            </foreach>
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="level = CASE _id ">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.level,jdbcType=INTEGER}
-
-            </foreach>
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="memo = CASE _id">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.memo,jdbcType=VARCHAR}
-
-            </foreach>
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="create_time = CASE _id ">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.createTime,jdbcType=TIMESTAMP}
-
-            </foreach>
-            <foreach collection="list" index="index" item="value" close="END,"
-                     open="update_time = CASE _id">
-                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.updateTime,jdbcType=TIMESTAMP}
-
-            </foreach>
-
-        </trim>
-        <where>
-            _id IN
-            <foreach collection="list" index="index" item="value" close=")"
-                     open="(" separator=",">#{value.key,jdbcType=VARCHAR}
-            </foreach>
-        </where>
-    </update>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteById" parameterType="java.lang.String">
         delete
         from sys_menu
         where _id = #{key,jdbcType=VARCHAR}
@@ -237,7 +194,7 @@
         </where>
     </delete>
 
-    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+    <delete id="deleteByIds" parameterType="java.util.List">
         delete from sys_menu
         <where>
             _id IN
@@ -247,13 +204,7 @@
         </where>
     </delete>
 
-    <select id="count" resultType="java.lang.Long">
-        SELECT
-        COUNT(0)
-        FROM sys_menu
-    </select>
-
-    <select id="countSelective" parameterType="com.hogae.cms.model.Menu" resultType="java.lang.Long">
+    <select id="queryCount" parameterType="com.hogae.cms.model.Menu" resultType="java.lang.Long">
         SELECT
         COUNT(0)
         FROM
@@ -284,14 +235,14 @@
     </select>
 
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
         where _id = #{key,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectByPrimaryKeys" parameterType="java.util.List" resultMap="BaseResultMap">
+    <select id="getByIds" parameterType="java.util.List" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
@@ -303,12 +254,7 @@
         </where>
     </select>
 
-    <select id="selectAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_menu
-    </select>
-    <select id="selectAllSelective" resultMap="BaseResultMap">
+    <select id="queryAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
@@ -337,7 +283,7 @@
         </where>
     </select>
 
-    <select id="selectByPaging" resultMap="BaseResultMap">
+    <select id="queryByPagination" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
@@ -366,7 +312,7 @@
         </where>
     </select>
 
-    <select id="selectDistinct" resultMap="BaseResultMap">
+    <select id="distinctField" resultMap="BaseResultMap">
         select
         DISTINCT ${fieldName}
         from sys_menu

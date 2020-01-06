@@ -17,16 +17,10 @@
 package com.hogae.freamwork.web.api;
 
 import com.hogae.freamwork.core.api.Service;
-import com.hogae.freamwork.web.model.JsonResponse;
-import org.springframework.web.reactive.function.server.ServerRequest;
-
 
 public interface Controller {
 
     Service getService();
-
-    JsonResponse<Void> unmappedRequest(ServerRequest request);
-
 
 }
 

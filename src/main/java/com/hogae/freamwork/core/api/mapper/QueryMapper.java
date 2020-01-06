@@ -32,5 +32,5 @@ public interface QueryMapper<K, M> extends Mapper {
 
     int queryCount(M model);
 
-    List<M> distinctField(M model);
+    List<M> distinctField(String fieldName,M model);
 }

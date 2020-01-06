@@ -25,20 +25,11 @@ import com.hogae.freamwork.web.model.JsonResponse;
 import com.hogae.freamwork.web.model.Pagination;
 import com.hogae.freamwork.web.service.WebService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.server.ServerRequest;
-
-import javax.validation.Valid;
 import java.util.List;
 
 public interface WebController<K, M extends Model<K>> extends InsertController<K, M>, UpdateController<K, M>, QueryController<K, M>, DeleteController<K, M> {
 
     WebService<K, M> getService();
-
-    @RequestMapping("/**")
-    default JsonResponse<Void> unmappedRequest(ServerRequest request) {
-        String uri = request.path();
-        return JsonResponse.error(new Exception("请求资源不存在！路径:" + uri));
-    }
 
     @PostMapping("/list")
     default JsonResponse<List<M>> list(@RequestBody(required = false) Pagination<M> body) {
@@ -82,7 +73,7 @@ public interface WebController<K, M extends Model<K>> extends InsertController<K
 
 
     @PutMapping("/create")
-    default JsonResponse<Void> create(@Valid @RequestBody M t) {
+    default JsonResponse<Void> create(@RequestBody M t) {
         getService().insertSelective(t);
         return JsonResponse.sucess();
     }
