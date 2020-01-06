@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright [2020] [hogae.com]
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hogae.cms.mapper.MenuMapper">
+    <cache/>
+    <resultMap id="BaseResultMap" type="com.hogae.cms.model.Menu">
+        <id column="_id" jdbcType="BIGINT" property="key"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        _id, name, url, level, memo, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.hogae.cms.model.Menu">
+        insert into sys_menu (_id, name, url,
+                              level, memo, create_time,
+                              update_time)
+        values (#{key,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{level,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.hogae.cms.model.Menu">
+        insert into sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                _id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchSelective" parameterType="java.util.List">
+        INSERT INTO
+        sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="list[0].key != null">
+                _id,
+            </if>
+            <if test="list[0].name != null">
+                name,
+            </if>
+            <if test="list[0].url != null">
+                url,
+            </if>
+            <if test="list[0].level != null">
+                level,
+            </if>
+            <if test="list[0].memo != null">
+                memo,
+            </if>
+            <if test="list[0].createTime != null">
+                create_time,
+            </if>
+            <if test="list[0].updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <foreach collection="list" index="index" item="value" separator="UNION ALL">
+            SELECT
+            #{value.key,jdbcType=VARCHAR}, #{value.name,jdbcType=VARCHAR}, #{value.url,jdbcType=VARCHAR},
+            #{value.level,jdbcType=INTEGER}, #{value.memo,jdbcType=VARCHAR}, #{value.createTime,jdbcType=TIMESTAMP},
+            #{value.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.hogae.cms.model.Menu">
+        update sys_menu
+        set name        = #{name,jdbcType=VARCHAR},
+            url         = #{url,jdbcType=VARCHAR},
+            level       = #{level,jdbcType=INTEGER},
+            memo        = #{memo,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where _id = #{key,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hogae.cms.model.Menu">
+        update sys_menu
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where _id = #{key,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+        UPDATE sys_menu SET
+        <trim suffixOverrides=",">
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="name = CASE _id ">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.name,jdbcType=VARCHAR}
+
+            </foreach>
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="url = CASE _id ">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.url,jdbcType=VARCHAR}
+
+            </foreach>
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="level = CASE _id ">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.level,jdbcType=INTEGER}
+
+            </foreach>
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="memo = CASE _id">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.memo,jdbcType=VARCHAR}
+
+            </foreach>
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="create_time = CASE _id ">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.createTime,jdbcType=TIMESTAMP}
+
+            </foreach>
+            <foreach collection="list" index="index" item="value" close="END,"
+                     open="update_time = CASE _id">
+                WHEN #{value.key,jdbcType=VARCHAR} THEN #{value.updateTime,jdbcType=TIMESTAMP}
+
+            </foreach>
+
+        </trim>
+        <where>
+            _id IN
+            <foreach collection="list" index="index" item="value" close=")"
+                     open="(" separator=",">#{value.key,jdbcType=VARCHAR}
+            </foreach>
+        </where>
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from sys_menu
+        where _id = #{key,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteSelective" parameterType="com.hogae.cms.model.Menu">
+        delete from sys_menu
+        <where>
+            <if test="key != null">
+                AND _id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="url != null">
+                AND url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null">
+                AND level = #{level,jdbcType=INTEGER}
+            </if>
+            <if test="memo != null">
+                AND memo = #{memo,jdbcType=VARCHAR}
+            </if>
+            <if test="startDateTime != null">
+                AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="stopDateTime != null">
+                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.util.List">
+        delete from sys_menu
+        <where>
+            _id IN
+            <foreach collection="list" index="index" item="key" open="(" close=")" separator=",">
+                #{key,jdbcType=VARCHAR}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT
+        COUNT(0)
+        FROM sys_menu
+    </select>
+
+    <select id="countSelective" parameterType="com.hogae.cms.model.Menu" resultType="java.lang.Long">
+        SELECT
+        COUNT(0)
+        FROM
+        sys_menu
+        <where>
+            <if test="key != null">
+                AND _id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="url != null">
+                AND url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null">
+                AND level = #{level,jdbcType=INTEGER}
+            </if>
+            <if test="memo != null">
+                AND memo = #{memo,jdbcType=VARCHAR}
+            </if>
+            <if test="startDateTime != null">
+                AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="stopDateTime != null">
+                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where _id = #{key,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKeys" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        <where>
+            _id IN
+            <foreach collection="list" index="index" item="key" open="(" close=")" separator=",">
+                #{key,jdbcType=VARCHAR}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+    </select>
+    <select id="selectAllSelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        <where>
+            <if test="key != null">
+                AND _id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                AND name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="url != null">
+                AND url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null">
+                AND level = #{level,jdbcType=INTEGER}
+            </if>
+            <if test="memo != null">
+                AND memo = #{memo,jdbcType=VARCHAR}
+            </if>
+            <if test="startDateTime != null">
+                AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="stopDateTime != null">
+                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPaging" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        <where>
+            <if test="entity.key != null">
+                AND _id = #{entity.key,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.name != null">
+                AND name = #{entity.name,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.url != null">
+                AND url = #{entity.url,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null">
+                AND level = #{entity.level,jdbcType=INTEGER}
+            </if>
+            <if test="entity.memo != null">
+                AND memo = #{entity.memo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startDateTime != null">
+                AND create_time &gt;= #{entity.startDateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.stopDateTime != null">
+                AND create_time &lt; #{entity.stopDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDistinct" resultMap="BaseResultMap">
+        select
+        DISTINCT ${fieldName}
+        from sys_menu
+        <where>
+            <if test="entity.key != null">
+                AND _id = #{entity.key,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.name != null">
+                AND name = #{entity.name,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.url != null">
+                AND url = #{entity.url,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null">
+                AND level = #{entity.level,jdbcType=INTEGER}
+            </if>
+            <if test="entity.memo != null">
+                AND memo = #{entity.memo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startDateTime != null">
+                AND create_time &gt;= #{entity.startDateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.stopDateTime != null">
+                AND create_time &lt; #{entity.stopDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getTables" resultType="String">
+        select TABLE_NAME  from information_schema.tables where TABLE_SCHEMA='cims';
+    </select>
+
+
+    <select id="getTableColumns" resultType="Map" parameterType="java.lang.String">
+        select
+            table_name , column_name ,  column_type , column_key , extra , is_nullable ,column_comment
+        from
+            information_schema.columns
+        where
+            table_schema='cims'
+            and TABLE_NAME = '${tableName}'
+        ;
+    </select>
+</mapper>

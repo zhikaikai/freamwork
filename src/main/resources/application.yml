@@ -4,7 +4,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cms?useSSL=false&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.2.214:3306/test?useSSL=false&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
     username: root
     password: 123456
     autoCommit: false
@@ -16,6 +16,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
 
 server:
   port: 8080
@@ -29,7 +30,7 @@ mybatis:
     map-underscore-to-camel-case: true
     default-fetch-size: 100
     default-statement-timeout: 30
-  mapperLocations: classpath*:net/xuanyutech/cims/*/dao/*.xml
+  mapperLocations: classpath*:com/hogae/*/mapper/*.xml
 
 
 logging:
@@ -37,3 +38,5 @@ logging:
     ROOT: debug
     org.apache.kafka: ERROR
     org.springframework.kafka: ERROR
+    io.netty.util: ERROR
+    org.springframework.boot.autoconfigure: ERROR #去除CONDITIONS EVALUATION REPORT

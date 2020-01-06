@@ -18,23 +18,21 @@ package com.hogae.freamwork.generator.freemarker.configuration;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 
-@Component
+//@Component
 public class CustomConfiguration {
 
-	@Bean
+    //	@Bean
 	public Configuration creatConfiguration() throws IOException {
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
-		cfg.setDirectoryForTemplateLoading(new File(URLDecoder.decode(ResourceUtils.getURL("classpath:com/hogae/core/freemarker/ftl/").getPath(), "utf-8")));
-		cfg.setDefaultEncoding("UTF-8");
-		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
-		return cfg;
-	}
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
+        cfg.setDirectoryForTemplateLoading(new File(URLDecoder.decode(ResourceUtils.getURL("classpath:com/hogae/freamwork/generator/freemarker/ftl/").getPath(), "utf-8")));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
+        return cfg;
+    }
 }
