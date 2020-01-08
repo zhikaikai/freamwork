@@ -17,16 +17,29 @@
 package com.hogae.freamwork.web.model;
 
 import com.hogae.freamwork.core.api.model.Model;
+import com.hogae.freamwork.web.validator.KeyCheck;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-public class WebModel<K> extends Model<K> {
+public class WebModel<K> implements Model<K> {
 
+    @NotNull(groups = KeyCheck.class)
     protected K key;
 
     protected Date createTime;
 
     protected Date updateTime;
+
+    public Date getCreateTime() {
+        if (createTime == null) return new Date();
+        return createTime;
+    }
+
+    public Date getUpdateTime() {
+        if (updateTime == null) return new Date();
+        return updateTime;
+    }
 }

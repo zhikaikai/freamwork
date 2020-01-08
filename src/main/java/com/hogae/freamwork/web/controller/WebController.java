@@ -24,14 +24,20 @@ import com.hogae.freamwork.web.api.web.UpdateController;
 import com.hogae.freamwork.web.model.JsonResponse;
 import com.hogae.freamwork.web.model.Pagination;
 import com.hogae.freamwork.web.service.WebService;
+import com.hogae.freamwork.web.validator.KeyCheck;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 import java.util.List;
 
 public interface WebController<K, M extends Model<K>> extends InsertController<K, M>, UpdateController<K, M>, QueryController<K, M>, DeleteController<K, M> {
 
     WebService<K, M> getService();
 
-    @PostMapping("/list")
+    @PostMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     default JsonResponse<List<M>> list(@RequestBody(required = false) Pagination<M> body) {
         if (body == null) body = new Pagination<M>();
         List<M> list = getService().queryByPagination(body);
@@ -39,23 +45,23 @@ public interface WebController<K, M extends Model<K>> extends InsertController<K
     }
 
 
-    @GetMapping("/{id}")
-    default JsonResponse<M> getEntity(@PathVariable("id") K id) {
+    @GetMapping(value = "/{id}")
+    default JsonResponse<M> getEntity(@Validated @PathVariable("id") K id) {
         M t = getService().getById(id);
         if (t == null) {
-            JsonResponse.error(new Exception("请输入正确的ID"));
+            return JsonResponse.error(new Exception("请输入正确的ID"));
         }
         return JsonResponse.sucess().setData(t);
     }
 
-    @DeleteMapping("/del")
-    default JsonResponse<Void> delete(@RequestBody List<K> ids) {
+    @DeleteMapping(value = "/del", produces = MediaType.APPLICATION_JSON_VALUE)
+    default JsonResponse<Void> delete(@RequestBody List<@NotNull K> ids) {
         getService().deleteByIds(ids);
         return JsonResponse.sucess();
     }
 
 
-    @DeleteMapping("/del/{id}")
+    @GetMapping(value = "/del/{id}")
     default JsonResponse<Void> delete(@PathVariable("id") K id) {
         int result = getService().deleteById(id);
         if (result == 0) {
@@ -65,17 +71,16 @@ public interface WebController<K, M extends Model<K>> extends InsertController<K
     }
 
 
-    @PutMapping("/update")
-    default JsonResponse<Void> update(@RequestBody M t) {
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    default JsonResponse<Void> update(@Validated({KeyCheck.class, Default.class}) @RequestBody M t) {
         getService().updateSelective(t);
         return JsonResponse.sucess();
     }
 
 
-    @PutMapping("/create")
-    default JsonResponse<Void> create(@RequestBody M t) {
+    @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
+    default JsonResponse<Void> create(@Validated @RequestBody M t) {
         getService().insertSelective(t);
         return JsonResponse.sucess();
     }
-
 }

@@ -80,7 +80,7 @@ public interface WebService<K, M extends Model<K>> extends InsertService<K, M>, 
         return getDao().queryCount(model);
     }
 
-    default List<M> distinctField(M model) {
-        return getDao().distinctField(model);
+    default List<M> distinctField(String fieldName, M model) {
+        return getDao().distinctField(fieldName, model);
     }
 }

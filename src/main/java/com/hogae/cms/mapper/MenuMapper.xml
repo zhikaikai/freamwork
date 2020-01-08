@@ -36,7 +36,7 @@
         insert into sys_menu (_id, name, url,
                               level, memo, create_time,
                               update_time)
-        values (#{key,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        values (#{key,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
                 #{level,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP})
     </insert>
@@ -68,7 +68,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="key != null">
-                #{key,jdbcType=VARCHAR},
+                #{key,jdbcType=BIGINT},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -119,7 +119,7 @@
         </trim>
         <foreach collection="list" index="index" item="value" separator="UNION ALL">
             SELECT
-            #{value.key,jdbcType=VARCHAR}, #{value.name,jdbcType=VARCHAR}, #{value.url,jdbcType=VARCHAR},
+            #{value.key,jdbcType=BIGINT}, #{value.name,jdbcType=VARCHAR}, #{value.url,jdbcType=VARCHAR},
             #{value.level,jdbcType=INTEGER}, #{value.memo,jdbcType=VARCHAR}, #{value.createTime,jdbcType=TIMESTAMP},
             #{value.updateTime,jdbcType=TIMESTAMP}
         </foreach>
@@ -131,9 +131,8 @@
             url         = #{url,jdbcType=VARCHAR},
             level       = #{level,jdbcType=INTEGER},
             memo        = #{memo,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP}
-        where _id = #{key,jdbcType=VARCHAR}
+        where _id = #{key,jdbcType=BIGINT}
     </update>
 
     <update id="updateSelective" parameterType="com.hogae.cms.model.Menu">
@@ -151,28 +150,22 @@
             <if test="memo != null">
                 memo = #{memo,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where _id = #{key,jdbcType=VARCHAR}
+        where _id = #{key,jdbcType=BIGINT}
     </update>
 
-    <delete id="deleteById" parameterType="java.lang.String">
+    <delete id="deleteById" parameterType="java.lang.Integer">
         delete
         from sys_menu
-        where _id = #{key,jdbcType=VARCHAR}
+        where _id = #{key,jdbcType=BIGINT}
     </delete>
 
     <delete id="deleteSelective" parameterType="com.hogae.cms.model.Menu">
         delete from sys_menu
         <where>
-            <if test="key != null">
-                AND _id = #{id,jdbcType=VARCHAR}
-            </if>
             <if test="name != null">
                 AND name = #{name,jdbcType=VARCHAR}
             </if>
@@ -185,12 +178,6 @@
             <if test="memo != null">
                 AND memo = #{memo,jdbcType=VARCHAR}
             </if>
-            <if test="startDateTime != null">
-                AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="stopDateTime != null">
-                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
-            </if>
         </where>
     </delete>
 
@@ -199,7 +186,7 @@
         <where>
             _id IN
             <foreach collection="list" index="index" item="key" open="(" close=")" separator=",">
-                #{key,jdbcType=VARCHAR}
+                #{key,jdbcType=BIGINT}
             </foreach>
         </where>
     </delete>
@@ -210,9 +197,6 @@
         FROM
         sys_menu
         <where>
-            <if test="key != null">
-                AND _id = #{id,jdbcType=VARCHAR}
-            </if>
             <if test="name != null">
                 AND name = #{name,jdbcType=VARCHAR}
             </if>
@@ -235,11 +219,11 @@
     </select>
 
 
-    <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
-        where _id = #{key,jdbcType=VARCHAR}
+        where _id = #{key,jdbcType=BIGINT}
     </select>
 
     <select id="getByIds" parameterType="java.util.List" resultMap="BaseResultMap">
@@ -249,7 +233,7 @@
         <where>
             _id IN
             <foreach collection="list" index="index" item="key" open="(" close=")" separator=",">
-                #{key,jdbcType=VARCHAR}
+                #{key,jdbcType=BIGINT}
             </foreach>
         </where>
     </select>
@@ -259,9 +243,6 @@
         <include refid="Base_Column_List"/>
         from sys_menu
         <where>
-            <if test="key != null">
-                AND _id = #{id,jdbcType=VARCHAR}
-            </if>
             <if test="name != null">
                 AND name = #{name,jdbcType=VARCHAR}
             </if>
@@ -289,7 +270,7 @@
         from sys_menu
         <where>
             <if test="entity.key != null">
-                AND _id = #{entity.key,jdbcType=VARCHAR}
+                AND _id = #{entity.key,jdbcType=BIGINT}
             </if>
             <if test="entity.name != null">
                 AND name = #{entity.name,jdbcType=VARCHAR}
@@ -306,8 +287,8 @@
             <if test="entity.startDateTime != null">
                 AND create_time &gt;= #{entity.startDateTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="entity.stopDateTime != null">
-                AND create_time &lt; #{entity.stopDateTime,jdbcType=TIMESTAMP}
+            <if test="entity.endDateTime != null">
+                AND create_time &lt; #{entity.endDateTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>
@@ -317,9 +298,6 @@
         DISTINCT ${fieldName}
         from sys_menu
         <where>
-            <if test="entity.key != null">
-                AND _id = #{entity.key,jdbcType=VARCHAR}
-            </if>
             <if test="entity.name != null">
                 AND name = #{entity.name,jdbcType=VARCHAR}
             </if>
@@ -331,12 +309,6 @@
             </if>
             <if test="entity.memo != null">
                 AND memo = #{entity.memo,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.startDateTime != null">
-                AND create_time &gt;= #{entity.startDateTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="entity.stopDateTime != null">
-                AND create_time &lt; #{entity.stopDateTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>

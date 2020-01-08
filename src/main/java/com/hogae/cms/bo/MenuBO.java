@@ -14,30 +14,18 @@
  * limitations under the License.
  */
 
-package com.hogae.cms.controller;
+package com.hogae.cms.bo;
 
 import com.hogae.cms.model.Menu;
-import com.hogae.cms.service.IMenuService;
-import com.hogae.freamwork.web.controller.WebController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
 
-/**
- * 菜单
- */
-@RestController
-@RequestMapping("/menu")
-public class MenuController implements WebController<Integer, Menu> {
+import java.util.Date;
 
-    @Autowired
-    public IMenuService service;
+public class MenuBO extends Menu {
 
-    public IMenuService getService() {
-        return service;
-    }
+    Date startDateTime;
 
+    Date endDateTime;
 
-
-
+    Page page;
 }

@@ -19,14 +19,23 @@ package com.hogae.cms.model;
 import com.hogae.freamwork.web.model.WebModel;
 import lombok.Data;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 @Data
 public class Menu extends WebModel<Integer> {
 
+    @Size(max = 32, min = 4)
     private String name;
 
+    @NotEmpty
     private String url;
 
-    private Integer level;
+    @DecimalMax(value = "10")
+    @DecimalMin(value = "0")
+    private int level;
 
     private String memo;
 

@@ -14,26 +14,7 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.api.mapper;
+package com.hogae.freamwork.web.validator;
 
-import com.hogae.freamwork.core.api.Mapper;
-import com.hogae.freamwork.web.model.Pagination;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
-
-public interface QueryMapper<K, M> extends Mapper {
-    @Validated
-    @NotNull M getById(K key);
-
-    List<M> getByIds(List<K> listKey);
-
-    List<M> queryAll(M model);
-
-    List<M> queryByPagination(Pagination<M> pagination);
-
-    int queryCount(M model);
-
-    List<M> distinctField(String fieldName, M model);
+public interface InsertCheck {
 }

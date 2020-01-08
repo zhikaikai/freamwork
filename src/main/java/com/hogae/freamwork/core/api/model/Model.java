@@ -20,6 +20,6 @@ package com.hogae.freamwork.core.api.model;
 import java.io.Serializable;
 
 
-public class Model<K> implements Serializable {
+public interface Model<K> extends Serializable {
 
 }

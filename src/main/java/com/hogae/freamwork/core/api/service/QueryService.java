@@ -33,6 +33,6 @@ public interface QueryService<K, M> extends Service {
 
     int queryCount(M model);
 
-    List<M> distinctField(M model);
+    List<M> distinctField(String fieldName, M model);
 
 }
