@@ -14,13 +14,31 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.web.api.web;
+package com.hogae.freamwork.core.api;
 
-import com.hogae.freamwork.web.api.Controller;
-import com.hogae.freamwork.web.model.JsonResponse;
+import lombok.Data;
 
-public interface InsertController<K, M> extends Controller {
+import java.io.Serializable;
 
-    JsonResponse<Void> create(M t);
+@Data
+public class Order implements Serializable {
+    final static String ASC = "ASC";
 
+    final static String DESC = "DESC";
+
+    final static String DEFAULT_ORDER = ASC;
+
+    String fieldName;
+
+    String order;
+
+    public Order(String fieldName) {
+        this.fieldName = fieldName;
+        this.order = DEFAULT_ORDER;
+    }
+
+    public Order(String fieldName, String order) {
+        this.fieldName = fieldName;
+        this.order = order;
+    }
 }

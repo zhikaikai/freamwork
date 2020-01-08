@@ -31,9 +31,9 @@ public interface QueryMapper<K, M> extends Mapper {
 
     List<M> queryAll(M model);
 
-    List<M> queryByPagination(Pagination<M> pagination);
+    <S extends M> List<M> queryByPagination(Pagination<S> pagination);
 
-    int queryCount(M model);
+    <S extends M> long queryCount(S model);
 
     List<M> distinctField(String fieldName, M model);
 }

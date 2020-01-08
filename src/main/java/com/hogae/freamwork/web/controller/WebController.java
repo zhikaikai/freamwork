@@ -16,7 +16,6 @@
 
 package com.hogae.freamwork.web.controller;
 
-import com.hogae.freamwork.core.api.model.Model;
 import com.hogae.freamwork.web.api.web.DeleteController;
 import com.hogae.freamwork.web.api.web.InsertController;
 import com.hogae.freamwork.web.api.web.QueryController;
@@ -33,14 +32,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 import java.util.List;
 
-public interface WebController<K, M extends Model<K>> extends InsertController<K, M>, UpdateController<K, M>, QueryController<K, M>, DeleteController<K, M> {
+public interface WebController<K, M, BO extends M> extends InsertController<K, M>, UpdateController<K, M>, QueryController<K, M, BO>, DeleteController<K, M> {
 
-    WebService<K, M> getService();
+    WebService<K, M, BO> getService();
 
     @PostMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
-    default JsonResponse<List<M>> list(@RequestBody(required = false) Pagination<M> body) {
-        if (body == null) body = new Pagination<M>();
-        List<M> list = getService().queryByPagination(body);
+    default JsonResponse<List<M>> list(@RequestBody(required = false) Pagination<BO> body) {
+        if (body == null) body = new Pagination<BO>();
+        List<M> list = (List<M>) getService().queryByPagination(body);
         return JsonResponse.sucess().setData(list);
     }
 

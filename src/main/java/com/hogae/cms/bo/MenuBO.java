@@ -17,15 +17,15 @@
 package com.hogae.cms.bo;
 
 import com.hogae.cms.model.Menu;
-import org.springframework.data.domain.Page;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class MenuBO extends Menu {
 
-    Date startDateTime;
+    public Date startDateTime;
 
-    Date endDateTime;
+    public Date endDateTime;
 
-    Page page;
 }

@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.web.api.web;
+package com.hogae.freamwork.core.api;
 
-import com.hogae.freamwork.web.api.Controller;
-import com.hogae.freamwork.web.model.JsonResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
-public interface InsertController<K, M> extends Controller {
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
-    JsonResponse<Void> create(M t);
+@Data
+public class Sort implements Serializable {
+
+    @JsonIgnore
+    private List<@NotNull Order> order;
 
 }

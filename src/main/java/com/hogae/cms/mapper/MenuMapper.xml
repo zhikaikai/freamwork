@@ -212,8 +212,8 @@
             <if test="startDateTime != null">
                 AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="stopDateTime != null">
-                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
+            <if test="endDateTime != null">
+                AND create_time &lt; #{endDateTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>
@@ -264,33 +264,44 @@
         </where>
     </select>
 
-    <select id="queryByPagination" resultMap="BaseResultMap">
+    <select id="queryByPagination" resultMap="BaseResultMap" parameterType="com.hogae.freamwork.web.model.Pagination">
         select
         <include refid="Base_Column_List"/>
         from sys_menu
-        <where>
-            <if test="entity.key != null">
-                AND _id = #{entity.key,jdbcType=BIGINT}
-            </if>
-            <if test="entity.name != null">
-                AND name = #{entity.name,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.url != null">
-                AND url = #{entity.url,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.level != null">
-                AND level = #{entity.level,jdbcType=INTEGER}
-            </if>
-            <if test="entity.memo != null">
-                AND memo = #{entity.memo,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.startDateTime != null">
-                AND create_time &gt;= #{entity.startDateTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="entity.endDateTime != null">
-                AND create_time &lt; #{entity.endDateTime,jdbcType=TIMESTAMP}
-            </if>
-        </where>
+        <if test="model != null">
+            <where>
+                <if test="model.key != null">
+                    AND _id = #{model.key,jdbcType=BIGINT}
+                </if>
+                <if test="model.name != null">
+                    AND name = #{model.name,jdbcType=VARCHAR}
+                </if>
+                <if test="model.url != null">
+                    AND url = #{model.url,jdbcType=VARCHAR}
+                </if>
+                <if test="model.level != null">
+                    AND level = #{model.level,jdbcType=INTEGER}
+                </if>
+                <if test="model.memo != null">
+                    AND memo = #{model.memo,jdbcType=VARCHAR}
+                </if>
+                <if test="model.startDateTime != null">
+                    AND create_time &gt;= #{model.startDateTime,jdbcType=TIMESTAMP}
+                </if>
+                <if test="model.endDateTime != null">
+                    AND create_time &lt; #{model.endDateTime,jdbcType=TIMESTAMP}
+                </if>
+            </where>
+        </if>
+        <if test="sort != null">
+            order by
+            <foreach collection="sort" separator="," item="s">
+                #{s.fieldName} #{s.order}
+            </foreach>
+        </if>
+        <if test="page != null">
+            limit ${page.rowCount} , ${page.pageSize}
+        </if>
     </select>
 
     <select id="distinctField" resultMap="BaseResultMap">

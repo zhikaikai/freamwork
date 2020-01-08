@@ -16,11 +16,10 @@
 
 package com.hogae.freamwork.web.api.web;
 
-import com.hogae.freamwork.core.api.model.Model;
 import com.hogae.freamwork.web.api.Controller;
 import com.hogae.freamwork.web.model.JsonResponse;
 
-public interface UpdateController<K, M extends Model<K>> extends Controller {
+public interface UpdateController<K, M> extends Controller {
 
     JsonResponse<Void> update(M t);
 

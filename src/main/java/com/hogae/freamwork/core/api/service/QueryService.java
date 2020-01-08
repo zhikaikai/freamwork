@@ -21,7 +21,7 @@ import com.hogae.freamwork.web.model.Pagination;
 
 import java.util.List;
 
-public interface QueryService<K, M> extends Service {
+public interface QueryService<K, M, BO extends M> extends Service {
 
     M getById(K key);
 
@@ -29,9 +29,9 @@ public interface QueryService<K, M> extends Service {
 
     List<M> queryAll(M model);
 
-    List<M> queryByPagination(Pagination<M> pagination);
+    List<M> queryByPagination(Pagination<BO> pagination);
 
-    int queryCount(M model);
+    long queryCount(M model);
 
     List<M> distinctField(String fieldName, M model);
 

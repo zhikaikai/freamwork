@@ -16,7 +16,6 @@
 
 package com.hogae.freamwork.web.service;
 
-import com.hogae.freamwork.core.api.model.Model;
 import com.hogae.freamwork.core.api.service.DeleteService;
 import com.hogae.freamwork.core.api.service.InsertService;
 import com.hogae.freamwork.core.api.service.QueryService;
@@ -26,7 +25,8 @@ import com.hogae.freamwork.web.model.Pagination;
 
 import java.util.List;
 
-public interface WebService<K, M extends Model<K>> extends InsertService<K, M>, UpdateService<K, M>, DeleteService<K, M>, QueryService<K, M> {
+
+public interface WebService<K, M, BO extends M> extends InsertService<K, M>, UpdateService<K, M>, DeleteService<K, M>, QueryService<K, M, BO> {
 
     WebMapper<K, M> getDao();
 
@@ -64,19 +64,21 @@ public interface WebService<K, M extends Model<K>> extends InsertService<K, M>, 
         return (M) getDao().getById(key);
     }
 
-    default List<M> getByIds(List<K> listKey){
+    default List<M> getByIds(List<K> listKey) {
         return getDao().getByIds(listKey);
     }
 
-    default List<M> queryAll(M model){
+    default List<M> queryAll(M model) {
         return getDao().queryAll(model);
     }
 
-    default List<M> queryByPagination(Pagination<M> pagination) {
+    default List<M> queryByPagination(Pagination<BO> pagination) {
+        long count = this.queryCount(pagination.getModel());
+        pagination.getPage().setCount(count);
         return getDao().queryByPagination(pagination);
     }
 
-    default int queryCount(M model) {
+    default long queryCount(M model) {
         return getDao().queryCount(model);
     }
 

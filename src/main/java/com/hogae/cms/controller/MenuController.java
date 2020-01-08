@@ -16,6 +16,7 @@
 
 package com.hogae.cms.controller;
 
+import com.hogae.cms.bo.MenuBO;
 import com.hogae.cms.model.Menu;
 import com.hogae.cms.service.IMenuService;
 import com.hogae.freamwork.web.controller.WebController;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/menu")
-public class MenuController implements WebController<Integer, Menu> {
+public class MenuController implements WebController<Integer, Menu, MenuBO> {
 
     @Autowired
     public IMenuService service;

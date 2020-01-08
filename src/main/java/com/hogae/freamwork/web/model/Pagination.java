@@ -17,6 +17,7 @@
 package com.hogae.freamwork.web.model;
 
 
+import com.hogae.freamwork.core.api.Sort;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,55 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class Pagination<M> {
 
-    final static int DEFAULT_PAGE_SIZE = 10;
-
-    final static int DEFAULT_PAGE_NUMBER = 1;
-
     private M model;
-    /**
-     * 总条数
-     */
-    private int count;
-    /**
-     * 当前页数
-     */
-    private int pageNumber = DEFAULT_PAGE_NUMBER;
-    /**
-     * 显示条数
-     */
-    private int pageSize = DEFAULT_PAGE_SIZE;
-    /**
-     * 分页总数
-     */
-    private int pageCount;
 
-    public Pagination() {
+    private Sort sort;
 
-    }
-
-    public Pagination(int count, int pageNumber, int pageSize) {
-        super();
-        this.count = count;
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
-        this.pageCount = (count + pageSize - 1) / pageSize;
-    }
-
-    public Pagination(int count, int pageNumber) {
-        super();
-        this.count = count;
-        this.pageCount = (count + pageSize - 1) / pageSize;
-        if (this.pageCount < pageNumber) {
-            this.pageNumber = 1;
-        } else {
-            this.pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-        }
-    }
-
-    public Pagination(int count) {
-        super();
-        this.count = count;
-        this.pageCount = (count + pageSize - 1) / pageSize;
-    }
+    private Page page;
 
 }

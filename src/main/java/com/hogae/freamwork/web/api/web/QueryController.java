@@ -22,9 +22,9 @@ import com.hogae.freamwork.web.model.Pagination;
 
 import java.util.List;
 
-public interface QueryController<K, M> extends Controller {
+public interface QueryController<K, M, BO extends M> extends Controller {
 
-    JsonResponse<List<M>> list(Pagination<M> body);
+    JsonResponse<List<M>> list(Pagination<BO> body);
 
 
     JsonResponse<M> getEntity(K id);

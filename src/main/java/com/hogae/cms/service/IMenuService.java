@@ -16,13 +16,14 @@
 
 package com.hogae.cms.service;
 
+import com.hogae.cms.bo.MenuBO;
 import com.hogae.cms.model.Menu;
 import com.hogae.freamwork.web.service.WebService;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IMenuService extends WebService<Integer, Menu> {
+public interface IMenuService extends WebService<Integer, Menu, MenuBO> {
 
     List<String> getTables() throws Exception;
 

@@ -20,8 +20,7 @@ import com.hogae.freamwork.core.api.mapper.DeleteMapper;
 import com.hogae.freamwork.core.api.mapper.InsertMapper;
 import com.hogae.freamwork.core.api.mapper.QueryMapper;
 import com.hogae.freamwork.core.api.mapper.UpdateMapper;
-import com.hogae.freamwork.core.api.model.Model;
 
-public interface WebMapper<K, M extends Model<K>> extends InsertMapper<K, M>, UpdateMapper<K, M>, DeleteMapper<K, M>, QueryMapper<K, M> {
+public interface WebMapper<K, M> extends InsertMapper<K, M>, UpdateMapper<K, M>, DeleteMapper<K, M>, QueryMapper<K, M> {
 
 }

@@ -27,11 +27,11 @@ import java.util.Date;
 public class WebModel<K> implements Model<K> {
 
     @NotNull(groups = KeyCheck.class)
-    protected K key;
+    public K key;
 
-    protected Date createTime;
+    public Date createTime;
 
-    protected Date updateTime;
+    public Date updateTime;
 
     public Date getCreateTime() {
         if (createTime == null) return new Date();

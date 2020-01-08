@@ -28,16 +28,16 @@ import javax.validation.constraints.Size;
 public class Menu extends WebModel<Integer> {
 
     @Size(max = 32, min = 4)
-    private String name;
+    public String name;
 
     @NotEmpty
-    private String url;
+    public String url;
 
     @DecimalMax(value = "10")
     @DecimalMin(value = "0")
-    private int level;
+    public Integer level;
 
-    private String memo;
+    public String memo;
 
 
 }
