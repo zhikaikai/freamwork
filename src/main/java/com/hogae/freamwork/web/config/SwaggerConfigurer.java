@@ -16,13 +16,11 @@
 
 package com.hogae.freamwork.web.config;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@ComponentScan(basePackages = "com.hogae")
 public class SwaggerConfigurer implements WebMvcConfigurer {
 
     @Override
@@ -32,6 +30,7 @@ public class SwaggerConfigurer implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
     }
 
 

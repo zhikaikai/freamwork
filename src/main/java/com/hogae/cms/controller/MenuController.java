@@ -20,6 +20,7 @@ import com.hogae.cms.bo.MenuBO;
 import com.hogae.cms.model.Menu;
 import com.hogae.cms.service.IMenuService;
 import com.hogae.freamwork.web.controller.WebController;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 菜单
  */
+@Api(produces = "菜单")
 @RestController
 @RequestMapping("/menu")
 public class MenuController implements WebController<Integer, Menu, MenuBO> {

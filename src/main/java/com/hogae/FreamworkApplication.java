@@ -21,7 +21,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "com.hogae")
 public class FreamworkApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(FreamworkApplication.class, args);
     }
