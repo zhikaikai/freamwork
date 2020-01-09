@@ -30,7 +30,7 @@ public class Order implements Serializable {
 
     String fieldName;
 
-    String order;
+    String order = DEFAULT_ORDER;
 
     public Order(String fieldName) {
         this.fieldName = fieldName;

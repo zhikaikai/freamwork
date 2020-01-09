@@ -295,8 +295,35 @@
         </if>
         <if test="sort != null">
             order by
-            <foreach collection="sort" separator="," item="s">
-                #{s.fieldName} #{s.order}
+            <foreach collection="sort.orders" separator="," item="order">
+                <trim>
+                    <choose>
+                        <when test="order.fieldName == 'key'">
+                            _id ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'name'">
+                            name ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'url'">
+                            url ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'level'">
+                            level ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'memo'">
+                            memo ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'createTime'">
+                            create_time ${order.order}
+                        </when>
+                        <when test="order.fieldName == 'updateTime'">
+                            update_time ${order.order}
+                        </when>
+                        <otherwise>
+
+                        </otherwise>
+                    </choose>
+                </trim>
             </foreach>
         </if>
         <if test="page != null">

@@ -16,17 +16,14 @@
 
 package com.hogae.freamwork.core.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
 @Data
 public class Sort implements Serializable {
 
-    @JsonIgnore
-    private List<@NotNull Order> order;
+    private List<Order> orders;
 
 }

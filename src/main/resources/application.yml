@@ -2,20 +2,66 @@ spring:
   profiles:
     active: dev
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.2.214:3306/test?useSSL=false&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
-    username: root
-    password: 123456
-    autoCommit: false
-    minIdle: 5
-    maximumPoolSize: 20
-    connectionInitSql: select 1
-    hikari:
-      idle-timeout: 10000
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+    druid:
+      type: com.alibaba.druid.pool.DruidDataSource
+      #基本属性
+      #根据url自动识别
+      #driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.2.214:3306/test?useSSL=false&tinyInt1isBit=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+      username: root
+      password: 3W2Eiw9QU3jdVy5/3RqCNICkY8O7iKzDuV+HIC0OTbv9x+3tZclWS+fKCRNtQOtfgJpMFXPZGcpYRsYJ+gndSA==
+      # 配置初始化大小、最小、最大 连接池数量
+      initialSize: 5
+      minIdle: 10
+      maxActive: 20
+      #配置获取连接等待超时的时间
+      maxWait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 2000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 600000
+      maxEvictableIdleTimeMillis: 900000
+      #用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'。
+      #如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会起作用。
+      validationQuery: select 1
+      #建议配置为true，不影响性能，并且保证安全性。
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      testWhileIdle: true
+      #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。默认true
+      testOnBorrow: false
+      #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。默认false
+      testOnReturn: false
+      #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作。
+      keepAlive: true
+      phyMaxUseCount: 1000
+      #config.decrypt解密密码
+      connection-properties: config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAOA/f0G5JejyieY7rVGJVpInzNpeCgratZw2boMa4Anz2z5mlvfZoN5ULZyZBfbxqyFXdBVgnDBftCeyuBwGSesCAwEAAQ==;
+      config:
+        #encoding
+        clientEncoding: UTF-8
+        serverEncoding: UTF-8
+      log:
+        stmt:
+          executableSql: ture
+      filter:
+        encoding:
+          enabled: true
+        #默认开启
+        stat:
+          db-type: mysql
+          enabled: true
+        config:
+          enabled: true
+        wall:
+          db-type: mysql
+          enabled: true
+        slf4j:
+          enabled: true
+      aop-patterns: com.hogae.*.mapper.*,com.hogae.*.dao.*,com.hogae.*.service.*
+      stat-view-servlet:
+        enabled: true
+      web-stat-filter:
+        enabled: true
 
 server:
   port: 8080
@@ -23,7 +69,9 @@ server:
     enabled: true
   servlet:
     context-path: /
-
+  jetty:
+    # acceptor线程数
+    acceptors: 1000
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -38,4 +86,16 @@ logging:
     org.apache.kafka: ERROR
     org.springframework.kafka: ERROR
     io.netty.util: ERROR
+    org.apache.tomcat: ERROR
+    org.apache.catalina: ERROR
     org.springframework.boot.autoconfigure: ERROR #去除CONDITIONS EVALUATION REPORT
+    org:
+      mybatis:
+        spring:
+          SqlSessionUtils: warn
+    druid:
+      sql:
+        DataSource: warn
+        Connection: warn
+        Statement: warn
+        ResultSet: debug
