@@ -21,7 +21,7 @@ import com.hogae.freamwork.core.api.Service;
 import java.util.List;
 
 public interface DeleteService<K, M> extends Service {
-    int deleteById(K key);
+    int deleteById(K key) throws Exception;
 
     int deleteByIds(List<K> listKey);
 

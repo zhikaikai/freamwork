@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      #100M
+      maxFileSize: 102400
   profiles:
     active: dev
   datasource:
@@ -72,6 +76,7 @@ server:
   jetty:
     # acceptor线程数
     acceptors: 1000
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -79,6 +84,11 @@ mybatis:
     default-statement-timeout: 30
   mapperLocations: classpath*:com/hogae/*/mapper/*.xml
 
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 logging:
   level:

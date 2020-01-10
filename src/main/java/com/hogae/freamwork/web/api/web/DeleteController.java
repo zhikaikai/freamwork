@@ -26,6 +26,6 @@ public interface DeleteController<K, M> extends Controller {
     JsonResponse<Void> delete(List<K> ids);
 
 
-    JsonResponse<Void> delete(K id);
+    JsonResponse<Void> delete(K id) throws Exception;
 
 }

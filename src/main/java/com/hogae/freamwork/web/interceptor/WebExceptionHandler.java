@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package com.hogae.freamwork.core.api.mapper;
+package com.hogae.freamwork.web.interceptor;
 
-import com.hogae.freamwork.core.api.Mapper;
-import org.springframework.validation.annotation.Validated;
+import com.hogae.freamwork.web.model.JsonResponse;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
+@ControllerAdvice
+public class WebExceptionHandler {
 
-public interface QueryMapper<K, M> extends Mapper {
-    @Validated
-    @NotNull M getById(K key);
-
-    List<M> getByIds(List<K> listKey);
-
-    List<M> queryAll(M model);
-
-    <S extends M> long queryCount(S model);
-
-    List<M> distinctField(String fieldName, M model);
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public JsonResponse<Void> exceptionHandler(Exception e) {
+        System.out.println("未知异常！原因是:" + e);
+        return JsonResponse.error(e);
+    }
 }

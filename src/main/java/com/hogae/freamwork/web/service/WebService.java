@@ -16,16 +16,19 @@
 
 package com.hogae.freamwork.web.service;
 
+import com.github.pagehelper.PageHelper;
 import com.hogae.freamwork.core.api.service.DeleteService;
 import com.hogae.freamwork.core.api.service.InsertService;
 import com.hogae.freamwork.core.api.service.QueryService;
 import com.hogae.freamwork.core.api.service.UpdateService;
 import com.hogae.freamwork.web.mapper.WebMapper;
 import com.hogae.freamwork.web.model.Pagination;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
+@Service
 public interface WebService<K, M, BO extends M> extends InsertService<K, M>, UpdateService<K, M>, DeleteService<K, M>, QueryService<K, M, BO> {
 
     WebMapper<K, M> getDao();
@@ -50,12 +53,15 @@ public interface WebService<K, M, BO extends M> extends InsertService<K, M>, Upd
         return getDao().updateSelective(model);
     }
 
-    default int deleteById(K key){
-        return getDao().deleteById(key);
+    default int deleteById(K key) {
+        getDao().deleteById(key);
+        return 1 / 0;
     }
+
     default int deleteByIds(List<K> listKey){
         return getDao().deleteByIds(listKey);
     }
+
     default int deleteSelective(M model){
         return getDao().deleteSelective(model);
     }
@@ -73,9 +79,8 @@ public interface WebService<K, M, BO extends M> extends InsertService<K, M>, Upd
     }
 
     default List<M> queryByPagination(Pagination<BO> pagination) {
-        long count = this.queryCount(pagination.getModel());
-        pagination.getPage().setCount(count);
-        return getDao().queryByPagination(pagination);
+        PageHelper.startPage(pagination.getPage().getPageNum(), pagination.getPage().getPageSize());
+        return getDao().queryAll(pagination.getModel());
     }
 
     default long queryCount(M model) {

@@ -43,9 +43,14 @@ public interface WebController<K, M, BO extends M> extends InsertController<K, M
         return JsonResponse.sucess().setData(list);
     }
 
+    @PostMapping(value = "/queryAll", produces = MediaType.APPLICATION_JSON_VALUE)
+    default JsonResponse<List<M>> queryAll(@RequestBody BO t) {
+        List<M> list = getService().queryAll(t);
+        return JsonResponse.sucess().setData(list);
+    }
 
     @GetMapping(value = "/{id}")
-    default JsonResponse<M> getEntity(@Validated @PathVariable("id") K id) {
+    default JsonResponse<M> getEntity(@PathVariable("id") K id) {
         M t = getService().getById(id);
         if (t == null) {
             return JsonResponse.error(new Exception("请输入正确的ID"));
@@ -63,6 +68,7 @@ public interface WebController<K, M, BO extends M> extends InsertController<K, M
     @GetMapping(value = "/del/{id}")
     default JsonResponse<Void> delete(@PathVariable("id") K id) {
         int result = getService().deleteById(id);
+
         if (result == 0) {
             JsonResponse.error(new Exception("请输入正确的ID"));
         }

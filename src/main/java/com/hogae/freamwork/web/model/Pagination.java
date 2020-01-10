@@ -17,7 +17,6 @@
 package com.hogae.freamwork.web.model;
 
 
-import com.hogae.freamwork.core.api.Sort;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,8 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 public class Pagination<M> {
 
     private M model;
-
-    private Sort sort;
 
     private Page page;
 

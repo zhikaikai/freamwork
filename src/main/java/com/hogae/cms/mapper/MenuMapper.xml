@@ -258,77 +258,10 @@
             <if test="startDateTime != null">
                 AND create_time &gt;= #{startDateTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="stopDateTime != null">
-                AND create_time &lt; #{stopDateTime,jdbcType=TIMESTAMP}
+            <if test="endDateTime != null">
+                AND create_time &lt; #{endDateTime,jdbcType=TIMESTAMP}
             </if>
         </where>
-    </select>
-
-    <select id="queryByPagination" resultMap="BaseResultMap" parameterType="com.hogae.freamwork.web.model.Pagination">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_menu
-        <if test="model != null">
-            <where>
-                <if test="model.key != null">
-                    AND _id = #{model.key,jdbcType=BIGINT}
-                </if>
-                <if test="model.name != null">
-                    AND name = #{model.name,jdbcType=VARCHAR}
-                </if>
-                <if test="model.url != null">
-                    AND url = #{model.url,jdbcType=VARCHAR}
-                </if>
-                <if test="model.level != null">
-                    AND level = #{model.level,jdbcType=INTEGER}
-                </if>
-                <if test="model.memo != null">
-                    AND memo = #{model.memo,jdbcType=VARCHAR}
-                </if>
-                <if test="model.startDateTime != null">
-                    AND create_time &gt;= #{model.startDateTime,jdbcType=TIMESTAMP}
-                </if>
-                <if test="model.endDateTime != null">
-                    AND create_time &lt; #{model.endDateTime,jdbcType=TIMESTAMP}
-                </if>
-            </where>
-        </if>
-        <if test="sort != null">
-            order by
-            <foreach collection="sort.orders" separator="," item="order">
-                <trim>
-                    <choose>
-                        <when test="order.fieldName == 'key'">
-                            _id ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'name'">
-                            name ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'url'">
-                            url ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'level'">
-                            level ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'memo'">
-                            memo ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'createTime'">
-                            create_time ${order.order}
-                        </when>
-                        <when test="order.fieldName == 'updateTime'">
-                            update_time ${order.order}
-                        </when>
-                        <otherwise>
-
-                        </otherwise>
-                    </choose>
-                </trim>
-            </foreach>
-        </if>
-        <if test="page != null">
-            limit ${page.rowCount} , ${page.pageSize}
-        </if>
     </select>
 
     <select id="distinctField" resultMap="BaseResultMap">
