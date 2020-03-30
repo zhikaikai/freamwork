@@ -80,7 +80,7 @@ public class TransactionManagerConfiguration {
         DefaultPointcutAdvisor pointcutAdvisor = new DefaultPointcutAdvisor();
         pointcutAdvisor.setAdvice(txAdvice);
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("execution(* com.hogae.*.service.impl.*.*(..))");
+        pointcut.setExpression("execution(* com.hogae.*.service.impl.*.*(..)) || execution(* com.hogae.*.service.*.*(..))");
         pointcutAdvisor.setPointcut(pointcut);
         return pointcutAdvisor;
     }

@@ -45,4 +45,10 @@ public class MenuService implements IMenuService {
 	public List<Map<String, Object>> getTableColumns(String tableName) throws Exception {
 		return getDao().getTableColumns(tableName);
 	}
+
+	@Override
+	public int deleteById(Integer key) {
+		getDao().deleteById(key);
+		return 1 / 0;
+	}
 }
