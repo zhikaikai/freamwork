@@ -140,4 +140,6 @@ public class StringHelper {
         return "".equals(str);
     }
 
+    public static void main(String[] args) {
+    }
 }

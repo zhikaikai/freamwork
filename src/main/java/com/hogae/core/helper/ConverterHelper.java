@@ -31,19 +31,79 @@ public class ConverterHelper {
 
     private static CaseFormat upperUnderscore = CaseFormat.UPPER_UNDERSCORE;
 
-    private static String convertToLowerHyphen(CaseFormat caseFormat, String str) {
+    private static String convertFromLowerHyphen(CaseFormat caseFormat, String str) {
         Preconditions.checkNotNull(str, "str 不能为 null !");
         return lowerHyphen.to(caseFormat, str);
     }
 
-    private static String convertToLowerUnderscore(CaseFormat caseFormat, String str) {
+    private static String convertFromLowerUnderscore(CaseFormat caseFormat, String str) {
         Preconditions.checkNotNull(str, "str 不能为 null !");
         return lowerUnderscore.to(caseFormat, str);
     }
 
-    private static String convertToUpperUnderscore(CaseFormat caseFormat, String str) {
+    private static String convertFromUpperUnderscore(CaseFormat caseFormat, String str) {
         Preconditions.checkNotNull(str, "str 不能为 null !");
         return upperUnderscore.to(caseFormat, str);
+    }
+
+    private static String convertFromLowerCamel(CaseFormat caseFormat, String str) {
+        Preconditions.checkNotNull(str, "str 不能为 null !");
+        return lowerCamel.to(caseFormat, str);
+    }
+
+    private static String convertFromUpperCamel(CaseFormat caseFormat, String str) {
+        Preconditions.checkNotNull(str, "str 不能为 null !");
+        return upperCamel.to(caseFormat, str);
+    }
+
+    /**
+     * 驼峰首字母小写
+     *
+     * @param str
+     * @return
+     */
+    public static String convertCamelToFirstCharlowerCase(String str) {
+        return convertFromUpperCamel(upperCamel, str);
+    }
+
+    /**
+     * 驼峰首字母大写
+     *
+     * @param str
+     * @return
+     */
+    public static String convertCamelToFirstCharUpperCase(String str) {
+        return convertFromLowerCamel(lowerCamel, str);
+    }
+
+    /**
+     * 驼峰转下划线，大写
+     *
+     * @param str
+     * @return
+     */
+    public static String convertCamelToUnderscoreUpperCase(String str) {
+        return convertFromLowerCamel(upperUnderscore, str);
+    }
+
+    /**
+     * 驼峰转连接符  小写
+     *
+     * @param str
+     * @return
+     */
+    public static String convertCamelToHyphenLowerCase(String str) {
+        return convertFromLowerCamel(lowerHyphen, str);
+    }
+
+    /**
+     * 驼峰转下划线 小写
+     *
+     * @param str
+     * @return
+     */
+    public static String convertCamelToUnderscoreLowerCase(String str) {
+        return convertFromLowerCamel(lowerUnderscore, str);
     }
 
     /**
@@ -53,7 +113,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertUnderscoreToHyphenLowerCase(String str) {
-        return convertToUpperUnderscore(lowerHyphen, str);
+        return convertFromUpperUnderscore(lowerHyphen, str);
     }
 
     /**
@@ -63,7 +123,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertUnderscoreToHyphen(String str) {
-        return convertToLowerUnderscore(lowerHyphen, str);
+        return convertFromLowerUnderscore(lowerHyphen, str);
     }
 
     /**
@@ -73,7 +133,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertHyphenToUnderscore(String str) {
-        return convertToLowerHyphen(lowerUnderscore, str);
+        return convertFromLowerHyphen(lowerUnderscore, str);
     }
 
     /**
@@ -83,7 +143,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertHyphenToUnderscoreUpperCase(String str) {
-        return convertToLowerHyphen(upperUnderscore, str);
+        return convertFromLowerHyphen(upperUnderscore, str);
     }
 
     /**
@@ -93,7 +153,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertToLowerCase(String str) {
-        return convertToUpperUnderscore(lowerUnderscore, str);
+        return convertFromUpperUnderscore(lowerUnderscore, str);
     }
 
     /**
@@ -103,7 +163,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertToUpperCase(String str) {
-        return convertToLowerUnderscore(upperUnderscore, str);
+        return convertFromLowerUnderscore(upperUnderscore, str);
     }
 
     /**
@@ -113,7 +173,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertHyphenToLowerCamel(String str) {
-        return convertToLowerHyphen(lowerCamel, str);
+        return convertFromLowerHyphen(lowerCamel, str);
     }
 
     /**
@@ -123,7 +183,7 @@ public class ConverterHelper {
      * @return
      */
     public static String convertHyphenToUpperCamel(String str) {
-        return convertToLowerHyphen(upperCamel, str);
+        return convertFromLowerHyphen(upperCamel, str);
     }
 
     /**
@@ -133,20 +193,17 @@ public class ConverterHelper {
      * @return
      */
     public static String convertUnderscoreToLowerCamel(String str) {
-        return convertToLowerUnderscore(lowerCamel, str);
+        return convertFromLowerUnderscore(lowerCamel, str);
     }
 
     /**
-     * 划线转驼峰 首字母大写
+     * 下划线转驼峰 首字母大写
      *
      * @param str
      * @return
      */
     public static String convertUnderscoreToUpperCamel(String str) {
-        return convertToLowerUnderscore(upperCamel, str);
+        return convertFromLowerUnderscore(upperCamel, str);
     }
 
-    public static void main(String[] args) {
-        System.out.println(convertHyphenToLowerCamel(null));
-    }
 }
