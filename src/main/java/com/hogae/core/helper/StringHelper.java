@@ -16,7 +16,19 @@
 
 package com.hogae.core.helper;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class StringHelper {
 
@@ -140,6 +152,325 @@ public class StringHelper {
         return "".equals(str);
     }
 
+    /**
+     * 常量 值为null
+     */
+    private final static String NULLTEXT = "null";
+
+    /**
+     * 返回 Joiner，并用separator连接字符
+     *
+     * @param separator
+     * @return
+     */
+    private static Joiner joinerOn(String separator) {
+        return Joiner.on(separator);
+    }
+
+    /**
+     * 返回 Joiner，跳过null值，并用separator连接字符
+     *
+     * @param separator
+     * @return
+     */
+    private static Joiner joinerOnSkipNulls(String separator) {
+        return joinerOn(separator).skipNulls();
+    }
+
+    /**
+     * 返回 Joiner，使用nullText替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @return
+     */
+    private static Joiner joinerOnUseForNull(String separator, final String nullText) {
+        return joinerOn(separator).useForNull(nullText);
+    }
+
+    public static String joinerOnUseForNull(String separator, final String nullText, String keyValueSeparator, Map<?, ?> map) {
+        return joinerOn(separator).useForNull(nullText).withKeyValueSeparator(keyValueSeparator).join(map);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，忽略null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts
+     * @return
+     */
+    public static String joinerSkipNulls(String separator, Iterable<?> parts) {
+        return joinerOnSkipNulls(separator).join(parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，忽略null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts
+     * @return
+     */
+    public static String joinerSkipNulls(String separator, Iterator<?> parts) {
+        return joinerOnSkipNulls(separator).join(parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，忽略null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts     这里parts为对象数组，拼接后为内存地址
+     * @return
+     */
+    public static String joinerSkipNulls(String separator, Object[] parts) {
+        return joinerOnSkipNulls(separator).join(parts);
+    }
+
+    /**
+     * 返回 first，second，rest拼接后的字符串，忽略null值，并用separator连接字符
+     *
+     * @param separator
+     * @param first     非空
+     * @param second    非空
+     * @param rest      Iterable
+     * @return
+     */
+    public static String joinerSkipNulls(String separator, Object first, Object second, Object... rest) {
+        return joinerOnSkipNulls(separator).join(first, second, rest);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用nullText替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param nullText
+     * @param parts
+     * @return
+     */
+    public static String joinerUseForNull(String separator, final String nullText, Iterable<?> parts) {
+        return joinerOnUseForNull(separator, nullText).join(parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用nullText替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param nullText
+     * @param parts
+     * @return
+     */
+    public static String joinerUseForNull(String separator, final String nullText, Iterator<?> parts) {
+        return joinerOnUseForNull(separator, nullText).join(parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用nullText替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param nullText
+     * @param parts     这里parts为对象数组，拼接后为内存地址
+     * @return
+     */
+    public static String joinerUseForNull(String separator, final String nullText, Object[] parts) {
+        return joinerOnUseForNull(separator, nullText).join(parts);
+    }
+
+
+    /**
+     * 返回 first，second，rest拼接后的字符串，使用nullText替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param nullText
+     * @param first     非空
+     * @param second    非空
+     * @param rest      Iterable
+     * @return
+     */
+    public static String joinerUseForNull(String separator, final String nullText, Object first, Object second, Object... rest) {
+        return joinerOnUseForNull(separator, nullText).join(first, second, rest);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用常量NULLTEXT替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts
+     * @return
+     */
+    public static String joinerUseForNull(String separator, Iterable<?> parts) {
+        return joinerUseForNull(separator, NULLTEXT, parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用常量NULLTEXT替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts
+     * @return
+     */
+    public static String joinerUseForNull(String separator, Iterator<?> parts) {
+        return joinerUseForNull(separator, NULLTEXT, parts);
+    }
+
+    /**
+     * 返回 parts拼接后的字符串，使用常量NULLTEXT替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param parts     这里parts为对象数组，拼接后为内存地址
+     * @return
+     */
+    public static String joinerUseForNull(String separator, Object[] parts) {
+        return joinerUseForNull(separator, NULLTEXT, parts);
+    }
+
+    /**
+     * 返回 first，second，rest拼接后的字符串，使用NULLTEXT替换null值，并用separator连接字符
+     *
+     * @param separator
+     * @param first     非空
+     * @param second    非空
+     * @param rest      Iterable
+     * @return
+     */
+    public static String joinerUseForNull(String separator, Object first, Object second, Object... rest) {
+        return joinerUseForNull(separator, NULLTEXT, first, second, rest);
+    }
+
+    private static Splitter splitterOn(char separator) {
+        return Splitter.on(separator);
+    }
+
+    private static Splitter splitterOn(final CharMatcher separatorMatcher) {
+        return Splitter.on(separatorMatcher);
+    }
+
+    private static Splitter splitterOn(final String separator) {
+        return Splitter.on(separator);
+    }
+
+    private static Splitter splitterOn(Pattern separatorPattern) {
+        return Splitter.on(separatorPattern);
+    }
+
+    private static Splitter splitterOnPattern(String separatorPattern) {
+        return Splitter.onPattern(separatorPattern);
+    }
+
+    private static Splitter splitterOnLimit(char separator, int maxItems) {
+        return Splitter.on(separator).limit(maxItems);
+    }
+
+    private static Splitter splitterOnLimit(final CharMatcher separatorMatcher, int maxItems) {
+        return Splitter.on(separatorMatcher).limit(maxItems);
+    }
+
+    private static Splitter splitterOnLimit(final String separator, int maxItems) {
+        return Splitter.on(separator).limit(maxItems);
+    }
+
+    private static Splitter splitterOnLimit(Pattern separatorPattern, int maxItems) {
+        return Splitter.on(separatorPattern).limit(maxItems);
+    }
+
+    private static Splitter splitterOnPatternLimit(String separatorPattern, int maxItems) {
+        return Splitter.onPattern(separatorPattern).limit(maxItems);
+    }
+
+
+    private static Splitter splitterOnOmitEmptyStrings(char separator) {
+        return Splitter.on(separator).omitEmptyStrings();
+    }
+
+    private static Splitter splitterOnOmitEmptyStrings(final CharMatcher separatorMatcher) {
+        return Splitter.on(separatorMatcher).omitEmptyStrings();
+    }
+
+    private static Splitter splitterOnOmitEmptyStrings(final String separator) {
+        return Splitter.on(separator).omitEmptyStrings();
+    }
+
+    private static Splitter splitterOnOmitEmptyStrings(Pattern separatorPattern) {
+        return Splitter.on(separatorPattern).omitEmptyStrings();
+    }
+
+    private static Splitter splitterOnPatternOmitEmptyStrings(String separatorPattern) {
+        return Splitter.onPattern(separatorPattern).omitEmptyStrings();
+    }
+
+    private static Splitter splitterOnTrimResults(char separator) {
+        return Splitter.on(separator).trimResults();
+    }
+
+    private static Splitter splitterOnTrimResults(final CharMatcher separatorMatcher) {
+        return Splitter.on(separatorMatcher).trimResults();
+    }
+
+    private static Splitter splitterOnTrimResults(final String separator) {
+        return Splitter.on(separator).trimResults();
+    }
+
+    private static Splitter splitterOnTrimResults(Pattern separatorPattern) {
+        return Splitter.on(separatorPattern).trimResults();
+    }
+
+    private static Splitter splitterOnPatternTrimResults(String separatorPattern) {
+        return Splitter.onPattern(separatorPattern).trimResults();
+    }
+
+
+    private static Splitter splitterOnTrimResults(char separator, CharMatcher trimmer) {
+        return Splitter.on(separator).trimResults(trimmer);
+    }
+
+    private static Splitter splitterOnTrimResults(final CharMatcher separatorMatcher, CharMatcher trimmer) {
+        return Splitter.on(separatorMatcher).trimResults(trimmer);
+    }
+
+    private static Splitter splitterOnTrimResults(final String separator, CharMatcher trimmer) {
+        return Splitter.on(separator).trimResults(trimmer);
+    }
+
+    private static Splitter splitterOnTrimResults(Pattern separatorPattern, CharMatcher trimmer) {
+        return Splitter.on(separatorPattern).trimResults(trimmer);
+    }
+
+    private static Splitter splitterOnPatternTrimResults(String separatorPattern, CharMatcher trimmer) {
+        return Splitter.onPattern(separatorPattern).trimResults(trimmer);
+    }
+
+    public static Iterable<String> splitterSplit(char separator, final CharSequence sequence) {
+        return splitterOn(separator).split(sequence);
+    }
+
+    public static List<String> splitterSplitToList(char separator, final CharSequence sequence) {
+        return splitterOn(separator).splitToList(sequence);
+    }
+
+    public static Stream<String> splitterSplitToStream(char separator, final CharSequence sequence) {
+        return splitterOn(separator).splitToStream(sequence);
+    }
+
+    public static Map<String, String> splitterWithKeyValueSeparatorSplit(char separator, char keyValueSplitter, final CharSequence sequence) {
+        return splitterOn(separator).withKeyValueSeparator(keyValueSplitter).split(sequence);
+    }
+
+    public static Map<String, String> splitterWithKeyValueSeparatorSplit(char separator, String keyValueSplitter, final CharSequence sequence) {
+        return splitterOn(separator).withKeyValueSeparator(keyValueSplitter).split(sequence);
+    }
+
+    public static Map<String, String> splitterWithKeyValueSeparatorSplit(char separator, Splitter keyValueSplitter, final CharSequence sequence) {
+        return splitterOn(separator).withKeyValueSeparator(keyValueSplitter).split(sequence);
+    }
+
+
     public static void main(String[] args) {
+        String str = "";
+//        System.out.println(Joiner.on('-').join(Lists.newArrayList("a","b","c",null)));
+        System.out.println(Joiner.on('-').skipNulls().join(Lists.newArrayList("a", "b", "c", null)));
+        System.out.println(Joiner.on("-").useForNull("null").join(Lists.newArrayList("a", "b", "c", null)));
+        System.out.println(Joiner.on(":").join("ss", "aa", "cc", "dd", "qq", "null"));
+        System.out.println(JSON.toJSONString(Splitter.on(":").split("1:2:3:4:")));
+        System.out.println(JSON.toJSONString(new String("1:2:3:4:").split(":")));
+        System.out.println(StringHelper.joinerSkipNulls(":", Arrays.asList("1", "2", "3", "")));
+        System.out.println(JSON.toJSONString(splitterOn(":").split("1:2:3:")));
+        ;
     }
 }
